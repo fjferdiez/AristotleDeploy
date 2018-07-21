@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|AnyCPU">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|AnyCPU">
+      <Configuration>Release</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>fe33bf0a-e9f0-43ac-bcf8-e709f794e9df</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PrepareForBuildDependsOn>
+    </PrepareForBuildDependsOn>
+  </PropertyGroup>
+  <Import Condition=" Exists('Deployment.targets') " Project="Deployment.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
+  <!-- vertag<:>start tokens<:>maj.min -->
+  <Import Condition=" Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Deployment\1.1\DeploymentProject.targets') " Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Deployment\1.1\DeploymentProject.targets" />
+  <!-- vertag<:>end -->
+  <ItemGroup>
+    <Content Include="serverfarm\sfarmdeploy.json" />
+    <Content Include="serverfarm\sfarmdeploy.parameters.json" />
+    <None Include="AppPlanner\azuredeploy.json" />
+    <None Include="azuredeploy.json" />
+    <None Include="azuredeploy.parameters.json" />
+    <None Include="Deployment.targets">
+      <Visible>False</Visible>
+    </None>
+    <Content Include="Deploy-AzureResourceGroup.ps1" />
+    <Content Include="network\vnetdeploy.json" />
+    <Content Include="servicebus\sbusquedeploy.parameters.json" />
+    <Content Include="servicebus\sbusquedeploy.json" />
+    <Content Include="sf\sfabricdeploy.parameters.json" />
+    <Content Include="sf\sfabricdeploy.json" />
+    <Content Include="sqlserver\sqldeploy.json" />
+    <Content Include="stor\sblobdeploy.json" />
+    <None Include="network\vnetdeploy.parameters.json" />
+    <None Include="sqlserver\sqldeploy.parameters.json" />
+    <None Include="stor\sblobdeploy.parameters.json" />
+  </ItemGroup>
+  <Target Name="GetReferenceAssemblyPaths" />
+</Project>

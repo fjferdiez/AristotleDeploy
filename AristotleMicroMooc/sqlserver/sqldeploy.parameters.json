@@ -1,0 +1,36 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "aristotle-sqlAdminLogin": {
+      "value": "aristotleadmin"
+    },
+    "aristotle-sqlAdminLoginPassword": {
+      "value": "ironman-318-micromooc"
+    },
+    "aristotle-prodName": {
+      "value": "aristotle-prod"
+    },
+    "aristotle-prodCollation": {
+      "value": "Chinese_PRC_CI_AS"
+    },
+    "aristotle-prodEdition": {
+      "value": "Standard"
+    },
+    "aristotle-prodRequestedServiceObjectiveName": {
+      "value": "S2"
+    },
+    "aristotle-dev-testName": {
+      "value": "aristotle-dev-testSql"
+    },
+    "aristotle-dev-testCollation": {
+      "value": "Chinese_PRC_CI_AS "
+    },
+    "aristotle-dev-testEdition": {
+      "value": "Basic"
+    },
+    "aristotle-dev-testRequestedServiceObjectiveName": {
+      "value": "Basic"
+    }
+  }
+}

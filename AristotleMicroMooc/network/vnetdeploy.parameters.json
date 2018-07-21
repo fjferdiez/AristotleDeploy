@@ -1,0 +1,24 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "AristotleVNetPrefix": {
+      "value": "10.10.0.0/16"
+    },
+    "AristotleSubnet1Prefix": {
+      "value": "10.10.10.0/24"
+    },
+    "AristotleSubnet2Prefix": {
+      "value": "10.10.20.0/24"
+    },
+    "AristotleSubnet3Prefix": {
+      "value": "10.10.30.0/24"
+    },
+    "AristotleSubnet4Prefix": {
+      "value": "10.10.40.0/24"
+    },
+    "AristotleSubnet5Prefix": {
+      "value": "10.10.50.0/24"
+    }
+  }
+}

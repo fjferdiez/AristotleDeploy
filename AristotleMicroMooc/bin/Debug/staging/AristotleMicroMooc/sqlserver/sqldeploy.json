@@ -1,0 +1,152 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "aristotle-sqlAdminLogin": {
+      "type": "string",
+      "minLength": 1
+    },
+    "aristotle-sqlAdminLoginPassword": {
+      "type": "securestring"
+    },
+    "aristotle-prodName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "aristotle-prodCollation": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
+    },
+    "aristotle-prodEdition": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "Standard",
+        "Premium"
+      ]
+    },
+    "aristotle-prodRequestedServiceObjectiveName": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "S0",
+        "S1",
+        "S2",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "metadata": {
+        "description": "Describes the performance level for Edition"
+      }
+    },
+    "aristotle-dev-testName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "aristotle-dev-testCollation": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
+    },
+    "aristotle-dev-testEdition": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "Standard",
+        "Premium"
+      ]
+    },
+    "aristotle-dev-testRequestedServiceObjectiveName": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "S0",
+        "S1",
+        "S2",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "metadata": {
+        "description": "Describes the performance level for Edition"
+      }
+    }
+  },
+  "variables": {
+    "aristotle-sqlName": "[concat('aristotle-sql', uniqueString(resourceGroup().id))]"
+  },
+  "resources": [
+    {
+      "name": "[variables('aristotle-sqlName')]",
+      "type": "Microsoft.Sql/servers",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2014-04-01-preview",
+      "dependsOn": [],
+      "tags": {
+        "displayName": "aristotle-sql"
+      },
+      "properties": {
+        "administratorLogin": "[parameters('aristotle-sqlAdminLogin')]",
+        "administratorLoginPassword": "[parameters('aristotle-sqlAdminLoginPassword')]"
+      },
+      "resources": [
+        {
+          "name": "AllowAllWindowsAzureIps",
+          "type": "firewallrules",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2014-04-01-preview",
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('aristotle-sqlName'))]"
+          ],
+          "properties": {
+            "startIpAddress": "0.0.0.0",
+            "endIpAddress": "0.0.0.0"
+          }
+        },
+        {
+          "name": "[parameters('aristotle-prodName')]",
+          "type": "databases",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2014-04-01-preview",
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('aristotle-sqlName'))]"
+          ],
+          "tags": {
+            "displayName": "aristotle-prod"
+          },
+          "properties": {
+            "collation": "[parameters('aristotle-prodCollation')]",
+            "edition": "[parameters('aristotle-prodEdition')]",
+            "maxSizeBytes": "1073741824",
+            "requestedServiceObjectiveName": "[parameters('aristotle-prodRequestedServiceObjectiveName')]"
+          }
+        },
+        {
+          "name": "[parameters('aristotle-dev-testName')]",
+          "type": "databases",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2014-04-01-preview",
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('aristotle-sqlName'))]"
+          ],
+          "tags": {
+            "displayName": "aristotle-dev-test"
+          },
+          "properties": {
+            "collation": "[parameters('aristotle-dev-testCollation')]",
+            "edition": "[parameters('aristotle-dev-testEdition')]",
+            "maxSizeBytes": "1073741824",
+            "requestedServiceObjectiveName": "[parameters('aristotle-dev-testRequestedServiceObjectiveName')]"
+          }
+        }
+      ]
+    }
+  ],
+  "outputs": {}
+}

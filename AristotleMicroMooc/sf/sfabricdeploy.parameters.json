@@ -1,0 +1,96 @@
+﻿{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+  "parameters": {
+    "clusterName": {
+      "value": "aristotle"
+    },
+    "clusterLocation": {
+      "value": "chinanorth"
+    },
+    "computeLocation": {
+      "value": "chinanorth"
+    },
+    "adminUserName": {
+      "value": "sfadmin"
+    },
+    "adminPassword": {
+      "value": null
+    },
+    "nicName": {
+      "value": "NIC-aristotle"
+    },
+    "publicIPAddressName": {
+      "value": "aristotle-PubIP"
+    },
+    "dnsName": {
+      "value": "aristotle"
+    },
+    "virtualNetworkName": {
+      "value": "VNet-aristotle"
+    },
+    "lbName": {
+      "value": "LB-aristotle"
+    },
+    "lbIPName": {
+      "value": "LBIP-aristotle"
+    },
+    "applicationDiagnosticsStorageAccountName": {
+      "value": "sfdgaristotle7398"
+    },
+    "supportLogStorageAccountName": {
+      "value": "sflogsaristotle1781"
+    },
+    "sourceVaultValue": {
+      "value": "/subscriptions/81ac2b5c-cc41-414c-b407-efec1d191bee/resourceGroups/aristotle/providers/Microsoft.KeyVault/vaults/aristotle"
+    },
+    "certificateUrlValue": {
+      "value": "https://aristotle.vault.azure.cn/secrets/aristotle-certf/204326f8901146c79d805d57c247d049"
+    },
+    "certificateThumbprint": {
+      "value": "2BB5657A74A57B71FD96BFA3D3703F980F909F57"
+    },
+    "vmImageSku": {
+      "value": "2016-Datacenter-with-Containers"
+    },
+    "vmImageOffer": {
+      "value": "WindowsServer"
+    },
+    "nt0ephemeralStartPort": {
+      "value": 49152
+    },
+    "nt0ephemeralEndPort": {
+      "value": 65534
+    },
+    "nt0applicationStartPort": {
+      "value": 20000
+    },
+    "nt0applicationEndPort": {
+      "value": 30000
+    },
+    "nt0fabricTcpGatewayPort": {
+      "value": 19000
+    },
+    "nt0fabricHttpGatewayPort": {
+      "value": 19080
+    },
+    "nt1ephemeralStartPort": {
+      "value": 49152
+    },
+    "nt1ephemeralEndPort": {
+      "value": 65534
+    },
+    "nt1applicationStartPort": {
+      "value": 20000
+    },
+    "nt1applicationEndPort": {
+      "value": 30000
+    },
+    "nt1fabricTcpGatewayPort": {
+      "value": 19000
+    },
+    "nt1fabricHttpGatewayPort": {
+      "value": 19080
+    }
+  }
+}

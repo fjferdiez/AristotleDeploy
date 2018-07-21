@@ -1,0 +1,96 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "AristotleVNetPrefix": {
+      "type": "string",
+      "defaultValue": "10.10.0.0/16"
+    },
+    "AristotleSubnet1Prefix": {
+      "type": "string",
+      "defaultValue": "10.10.10.0/24"
+    },
+    "AristotleSubnet2Prefix": {
+      "type": "string",
+      "defaultValue": "10.10.20.0/24"
+    },
+    "AristotleSubnet3Prefix": {
+      "type": "string",
+      "defaultValue": "10.10.30.0/24"
+    },
+    "AristotleSubnet4Prefix": {
+      "type": "string",
+      "defaultValue": "10.10.40.0/24"
+    },
+    "AristotleSubnet5Prefix": {
+      "type": "string",
+      "defaultValue": "10.10.50.0/24"
+    }
+  },
+  "variables": {
+    "AristotleName": "[concat(resourceGroup().name, '-AN')]",
+    "AristotlePrefix": "[parameters('AristotleVNetPrefix')]",
+    "AristotleSubnet1Name": "[concat(variables('AristotleName'), '-WebApp')]",
+    "AristotleSubnet1Prefix": "[parameters('AristotleSubnet1Prefix')]",
+    "AristotleSubnet2Name": "[concat(variables('AristotleName'), '-Queue')]",
+    "AristotleSubnet2Prefix": "[parameters('AristotleSubnet2Prefix')]",
+    "AristotleSubnet3Name": "[concat(variables('AristotleName'), '-ApiManagement')]",
+    "AristotleSubnet3Prefix": "[parameters('AristotleSubnet3Prefix')]",
+    "AristotleSubnet4Name": "[concat(variables('AristotleName'), '-ServiceFabric')]",
+    "AristotleSubnet4Prefix": "[parameters('AristotleSubnet4Prefix')]",
+    "AristotleSubnet5Name": "[concat(variables('AristotleName'), '-Storage')]",
+    "AristotleSubnet5Prefix": "[parameters('AristotleSubnet5Prefix')]"
+  },
+  "resources": [
+    {
+      "name": "[variables('AristotleName')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2016-03-30",
+      "dependsOn": [],
+      "tags": {
+        "displayName": "Aristotle"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('AristotlePrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('AristotleSubnet1Name')]",
+            "properties": {
+              "addressPrefix": "[variables('AristotleSubnet1Prefix')]"
+            }
+          },
+          {
+            "name": "[variables('AristotleSubnet2Name')]",
+            "properties": {
+              "addressPrefix": "[variables('AristotleSubnet2Prefix')]"
+            }
+          },
+          {
+            "name": "[variables('AristotleSubnet3Name')]",
+            "properties": {
+              "addressPrefix": "[variables('AristotleSubnet3Prefix')]"
+            }
+          },
+          {
+            "name": "[variables('AristotleSubnet4Name')]",
+            "properties": {
+              "addressPrefix": "[variables('AristotleSubnet4Prefix')]"
+            }
+          },
+          {
+            "name": "[variables('AristotleSubnet5Name')]",
+            "properties": {
+              "addressPrefix": "[variables('AristotleSubnet5Prefix')]"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "outputs": {}
+}

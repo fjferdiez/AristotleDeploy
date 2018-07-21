@@ -1,0 +1,339 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "Aristotle-location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+
+    "Aristotle-VNetPrefix": {
+      "type": "string",
+      "defaultValue": "10.10.0.0/16"
+    },
+    "Aristotle-VNetSubnet1Prefix": {
+      "type": "string",
+      "defaultValue": "10.10.10.0/24"
+    },
+    "Aristotle-VNetSubnet2Prefix": {
+      "type": "string",
+      "defaultValue": "10.10.20.0/24"
+    },
+    "Aristotle-VNetSubnet3Prefix": {
+      "type": "string",
+      "defaultValue": "10.10.30.0/24"
+    },
+    "Aristotle-VNetSubnet4Prefix": {
+      "type": "string",
+      "defaultValue": "10.10.40.0/24"
+    },
+    "Aristotle-VNetSubnet5Prefix": {
+      "type": "string",
+      "defaultValue": "10.10.50.0/24"
+    },
+
+    "Aristotle-sqlAdminLogin": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Aristotle-sqlAdminLoginPassword": {
+      "type": "securestring"
+    },
+    "Aristotle-sqlProdName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Aristotle-sqlProdCollation": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
+    },
+    "Aristotle-sqlProdEdition": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "Standard",
+        "Premium"
+      ]
+    },
+    "Aristotle-sqlProdRequestedServiceObjectiveName": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "S0",
+        "S1",
+        "S2",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "metadata": {
+        "description": "Describes the performance level for Edition"
+      }
+    },
+    "Aristotle-sqlDevTestName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Aristotle-sqlDevTestCollation": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
+    },
+    "Aristotle-sqlDevTestEdition": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "Standard",
+        "Premium"
+      ]
+    },
+    "Aristotle-sqlDevTestRequestedServiceObjectiveName": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "S0",
+        "S1",
+        "S2",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "metadata": {
+        "description": "Describes the performance level for Edition"
+      }
+    },
+
+    "Aristotle-BlobStorageProdType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_ZRS",
+        "Standard_GRS",
+        "Standard_RAGRS",
+        "Premium_LRS"
+      ]
+    },
+    "Aristotle-BlobStorageDevTestType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_ZRS",
+        "Standard_GRS",
+        "Standard_RAGRS",
+        "Premium_LRS"
+      ]
+    },
+
+    "Aristotle-serviceBusNamespaceName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the Service Bus namespace"
+      }
+    },
+    "Aristotle-serviceBusQueueName1": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the Queue"
+      }
+    },
+    "Aristotle-serviceBusQueueName2": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the Queue"
+      }
+    }
+
+  },
+  "variables": {
+    "apiVersion": "2017-05-10",
+    "location": "[parameters('Aristotle-location')]",
+    "templateBaseUrl": "",
+
+    "serviceFabricTemplateUrl": "[concat(variables('templateBaseUrl'),'sf/sfabricdeploy.json')]",
+    "serverFarmTemplateUrl": "[concat(variables('templateBaseUrl'),'serverfarm/sfarmdeploy.json')]",
+
+    "vNetTemplateUrl": "[concat(variables('templateBaseUrl'),'network/vnetdeploy.json')]",
+    "vNetName": "[concat(resourceGroup().name, '-AvNet')]",
+    "vNetPrefix": "[parameters('Aristotle-VNetPrefix')]",
+    "vNetSub1Prefix": "[parameters('Aristotle-VNetSubnet1Prefix')]",
+    "vNetSub2Prefix": "[parameters('Aristotle-VNetSubnet2Prefix')]",
+    "vNetSub3Prefix": "[parameters('Aristotle-VNetSubnet3Prefix')]",
+    "vNetSub4Prefix": "[parameters('Aristotle-VNetSubnet4Prefix')]",
+    "vNetSub5Prefix": "[parameters('Aristotle-VNetSubnet5Prefix')]",
+
+    "sqlServerTemplateUrl": "[concat(variables('templateBaseUrl'),'sqlserver/sqldeploy.json')]",
+    "sqlServerName": "[concat(resourceGroup().name, '-AristotleSql')]",
+    "sqlAdminLogin": "[parameters('Aristotle-sqlAdminLogin')]",
+    "sqlAdminLoginPassword": "[parameters('Aristotle-sqlAdminLoginPassword')]",
+    "sqlProdName": "[parameters('Aristotle-sqlProdName')]",
+    "sqlProdCollation": "[parameters('Aristotle-sqlProdCollation')]",
+    "sqlProdEdition": "[parameters('Aristotle-sqlProdEdition')]",
+    "sqlProdRequestedServiceObjectiveName": "[parameters('Aristotle-sqlProdRequestedServiceObjectiveName')]",
+    "sqlDevTestName": "[parameters('Aristotle-sqlDevTestName')]",
+    "sqlDevTestCollation": "[parameters('Aristotle-sqlDevTestCollation')]",
+    "sqlDevTestEdition": "[parameters('Aristotle-sqlDevTestEdition')]",
+    "sqlDevTestRequestedServiceObjectiveName": "[parameters('Aristotle-sqlDevTestRequestedServiceObjectiveName')]",
+
+    "blobStorageTemplateUrl": "[concat(variables('templateBaseUrl'),'stor/sblobdeploy.json')]",
+    "blobStorageName": "[concat(resourceGroup().name, '-AristotleBlobStorage')]",
+    "blobStorageProdType": "[parameters('Aristotle-BlobStorageProdType')]",
+    "blobStorageDevTestType": "[parameters('Aristotle-BlobStorageDevTestType')]",
+
+    "serviceBusTemplateUrl": "[concat(variables('templateBaseUrl'),'servicebus/sbusquedeploy.json')]",
+    "serviceBusName": "[concat(resourceGroup().name, '-AristotleServiceBusQueue')]",
+    "serviceBusNamespaceName": "[parameters('Aristotle-serviceBusNamespaceName')]",
+    "serviceBusQueueName1": "[parameters('Aristotle-serviceBusQueueName1')]",
+    "serviceBusQueueName2": "[parameters('Aristotle-serviceBusQueueName2')]"
+
+
+
+  },
+  "resources": [
+    {
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[variables('vNetName')]",
+      "type": "Microsoft.Resources/deployments",
+      "tags": {
+        "displayName": "Aristotle Virtual Network"
+      },
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('vNetTemplateUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "AristotleVNetPrefix": {
+            "value": "[variables('vNetPrefix')]"
+          },
+          "AristotleSubnet1Prefix": {
+            "value": "[variables('vNetSub1Prefix')]"
+          },
+          "AristotleSubnet2Prefix": {
+            "value": "[variables('vNetSub2Prefix')]"
+          },
+          "AristotleSubnet3Prefix": {
+            "value": "[variables('vNetSub3Prefix')]"
+          },
+          "AristotleSubnet4Prefix": {
+            "value": "[variables('vNetSub4Prefix')]"
+          },
+          "AristotleSubnet5Prefix": {
+            "value": "[variables('vNetSub5Prefix')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[variables('sqlServerName')]",
+      "type": "Microsoft.Resources/deployments",
+      "tags": {
+        "displayName": "SQL Resources"
+      },
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('sqlServerTemplateUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "aristotle-sqlAdminLogin": {
+            "value": "[variables('sqlAdminLogin')]"
+          },
+          "aristotle-sqlAdminLoginPassword": {
+            "value": "[variables('sqlAdminLoginPassword')]"
+          },
+          "aristotle-prodName": {
+            "value": "[variables('sqlProdName')]"
+          },
+          "aristotle-prodCollation": {
+            "value": "[variables('sqlProdCollation')]"
+          },
+          "aristotle-prodEdition": {
+            "value": "[variables('sqlProdEdition')]"
+          },
+          "aristotle-prodRequestedServiceObjectiveName": {
+            "value": "[variables('sqlProdRequestedServiceObjectiveName')]"
+          },
+          "aristotle-dev-testName": {
+            "value": "[variables('sqlDevTestName')]"
+          },
+          "aristotle-dev-testCollation": {
+            "value": "[variables('sqlDevTestCollation')]"
+          },
+          "aristotle-dev-testEdition": {
+            "value": "[variables('sqlDevTestEdition')]"
+          },
+          "aristotle-dev-testRequestedServiceObjectiveName": {
+            "value": "[variables('sqlDevTestRequestedServiceObjectiveName')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[variables('blobStorageName')]",
+      "type": "Microsoft.Resources/deployments",
+      "tags": {
+        "displayName": "Blob Storage"
+      },
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('blobStorageTemplateUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "aristotlestorageprodType": {
+            "value": "[variables('blobStorageProdType')]"
+          },
+          "aristotlestoragedevtestType": {
+            "value": "[variables('blobStorageDevTestType')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[variables('serviceBusName')]",
+      "type": "Microsoft.Resources/deployments",
+      "tags": {
+        "displayName": "Service Bus Queue"
+      },
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('serviceBusTemplateUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "serviceBusNamespaceName": {
+            "value": "[variables('serviceBusNamespaceName')]"
+          },
+          "serviceBusQueueName1": {
+            "value": "[variables('serviceBusQueueName1')]"
+          },
+          "serviceBusQueueName2": {
+            "value": "[variables('serviceBusQueueName2')]"
+          },
+          "location": {
+            "value": "[variables('location')]"
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {
+  }
+}

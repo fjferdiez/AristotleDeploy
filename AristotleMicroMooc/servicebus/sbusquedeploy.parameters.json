@@ -1,0 +1,15 @@
+﻿{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "serviceBusNamespaceName": {
+      "value": "Aristotle-Service-Bus"
+    },
+    "serviceBusQueueName1": {
+      "value": "Aristotle-Service-Bus-Queue1"
+    },
+    "serviceBusQueueName2": {
+      "value": "Aristotle-Service-Bus-Queue2"
+    }
+  }
+}
